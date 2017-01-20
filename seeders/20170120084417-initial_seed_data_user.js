@@ -1,5 +1,8 @@
 'use strict';
 const faker = require('faker')
+function random() {
+  return (Math.floor(Math.random()*(9999999999-1111111111)+1111111111))
+}
 
 module.exports = {
   up: function (queryInterface, Sequelize) {
@@ -14,11 +17,11 @@ module.exports = {
       }], {});
     */
     return queryInterface.bulkInsert('Users', [
-      {name: faker.name.firstName(), password: false, createdAt: new Date(), updatedAt: new Date()},
-      {name: faker.name.firstName(), password: false, createdAt: new Date(), updatedAt: new Date()},
-      {name: faker.name.firstName(), password: false, createdAt: new Date(), updatedAt: new Date()},
-      {name: faker.name.firstName(), password: false, createdAt: new Date(), updatedAt: new Date()},
-      {name: faker.name.firstName(), password: false, createdAt: new Date(), updatedAt: new Date()},
+      {name: faker.name.firstName(), password: false, birthdate: faker.date.between('1980-01-01', '2000-12-30'), ocean: random(), createdAt: new Date(), updatedAt: new Date()},
+      {name: faker.name.firstName(), password: false, birthdate: faker.date.between('1980-01-01', '2000-12-30'), ocean: random(), createdAt: new Date(), updatedAt: new Date()},
+      {name: faker.name.firstName(), password: false, birthdate: faker.date.between('1980-01-01', '2000-12-30'), ocean: random(), createdAt: new Date(), updatedAt: new Date()},
+      {name: faker.name.firstName(), password: false, birthdate: faker.date.between('1980-01-01', '2000-12-30'), ocean: random(), createdAt: new Date(), updatedAt: new Date()},
+      {name: faker.name.firstName(), password: false, birthdate: faker.date.between('1980-01-01', '2000-12-30'), ocean: random(), createdAt: new Date(), updatedAt: new Date()},
     ], {});
   },
 
