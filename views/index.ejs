@@ -1,14 +1,8 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
+<% include partials/header %>
     <h1>Selamat Datang di Personality Checker</h1>
     <br>
     <br>
-    <form class="" action="/register" method="get">
+    <form class="" action="/register" method="post">
       <fieldset>
         <legend>Registration Form:</legend>
         Name:<br>
@@ -18,5 +12,4 @@
         <input type="submit" value="Register">
       </fieldset>
     </form>
-  </body>
-</html>
+<% include partials/footer %>
