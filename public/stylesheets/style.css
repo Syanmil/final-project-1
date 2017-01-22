@@ -6,3 +6,18 @@ body {
 a {
   color: #00B7FF;
 }
+
+.box {
+  width:500px;
+}
+
+#registerForm .form-control-feedback {
+    top: 0;
+    right: -15px;
+}
+
+.footer {
+  position: absolute;
+  bottom: 5%;
+  left: 5%;
+}

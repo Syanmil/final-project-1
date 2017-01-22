@@ -12,12 +12,15 @@ module.exports = function(sequelize, DataTypes) {
         // associations can be defined here
       },
       list: function () {
+        let listed = []
         User.findAll({
           order: [['id', 'ASC']]
         }).then(function (user) {
           user.forEach(function(val){
+            listed.push(val.dataValues);
             console.log(val.dataValues);
           })
+          return listed
         })
       },
       addUser: function(name, password, birthdate, ocean, preference) {
@@ -44,13 +47,26 @@ module.exports = function(sequelize, DataTypes) {
           })
         })
       },
-      updateUserOCEAN: function(id, value){
-        User.findById(id).then(function(err, val){
-          val.update({
-            ocean: value
-          }).then(function(err){
-            console.log(`User OCEAN ${id} Updated`);
+      updateMost: function(id, name, password, preference){
+        User.findById(id).then(function(user){
+          user.update({
+            name: name,
+            password: password,
+            preference: preference
+          }).then(function() {
+            console.log('data Updated');
           })
+        })
+      },
+      updateUserOCEAN: function(name, value){
+        User.update({
+          ocean: value
+        }, {
+          where: {
+            name: name
+          }
+        }).then(function(err){
+          console.log(`User OCEAN ${name} Updated`);
         })
       },
       deleteUser: function(id){

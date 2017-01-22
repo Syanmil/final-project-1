@@ -1,0 +1,33 @@
+<% include partials/header %>
+<form class="form-horizontal" action="/updated" method="post">
+  <fieldset>
+    <legend>Update Data <%= data.name %></legend>
+    <input type="hidden" name="id" value=<%= data.id %>>
+    <div class="form-group">
+      <label for="name" class="col-sm-8">UserName</label>
+      <div class="col-sm-6">
+        <input type="name" class="form-control" name="name" id="name" value=<%= data.name %>>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="password" class="col-sm-8">Password</label>
+      <div class="col-sm-6">
+        <input type="password" class="form-control" name="password" id="password" value=<%= data.password %>>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="Preference" class="col-sm-8">Preference</label>
+      <div class="col-sm-6">
+        <input type="textarea" class="form-control" name="preference" id="Preference" value= <%= data.preference %>>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" class="btn btn-success">Update</button>
+        <a class="btn btn-danger" href="/main2" role="button">Cancel</a>
+      </div>
+    </div>
+  </fieldset>
+</form>
+
+<% include partials/footer %>
