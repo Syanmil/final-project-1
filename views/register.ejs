@@ -3,8 +3,7 @@
 <h1>Anda Telah Terdaftar</h1>
 <br><br>
 <form class="" action="/main" method="post">
-  <label for="">Name:</label>
-  <input type="text" name= user value= <%= user %> ><br><br>
+  <input type="hidden" name= user value= <%= user %> ><br><br>
   <% for (var i = 0; i < quiz.length; i++){ %>
     <label for=""><%= i+1 %>. <%= quiz[i] %></label><br><br>
     <input type="radio" value="1" name= <%= "answer"+i %>> Sangat Sesuai

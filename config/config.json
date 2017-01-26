@@ -1,7 +1,9 @@
 {
   "development": {
-      "storage": "db/user.db",
-      "dialect": "sqlite",
-      "host": "127.0.0.1"
+    "username": "admin",
+    "password": "password",
+    "database": "Checker",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
   }
 }

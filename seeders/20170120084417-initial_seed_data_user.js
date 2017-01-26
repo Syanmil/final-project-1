@@ -17,11 +17,11 @@ module.exports = {
       }], {});
     */
     return queryInterface.bulkInsert('Users', [
-      {name: faker.name.firstName(), password: false, birthdate: faker.date.between('1980-01-01', '2000-12-30'), ocean: random(), createdAt: new Date(), updatedAt: new Date()},
-      {name: faker.name.firstName(), password: false, birthdate: faker.date.between('1980-01-01', '2000-12-30'), ocean: random(), createdAt: new Date(), updatedAt: new Date()},
-      {name: faker.name.firstName(), password: false, birthdate: faker.date.between('1980-01-01', '2000-12-30'), ocean: random(), createdAt: new Date(), updatedAt: new Date()},
-      {name: faker.name.firstName(), password: false, birthdate: faker.date.between('1980-01-01', '2000-12-30'), ocean: random(), createdAt: new Date(), updatedAt: new Date()},
-      {name: faker.name.firstName(), password: false, birthdate: faker.date.between('1980-01-01', '2000-12-30'), ocean: random(), createdAt: new Date(), updatedAt: new Date()},
+      {name: faker.name.firstName(), password: false, birthdate: faker.date.between('1980-01-01', '2000-12-30'), ocean: random(), createdAt: new Date(), updatedAt: new Date(), role: 'free'},
+      {name: faker.name.firstName(), password: false, birthdate: faker.date.between('1980-01-01', '2000-12-30'), ocean: random(), createdAt: new Date(), updatedAt: new Date(), role: 'free'},
+      {name: faker.name.firstName(), password: false, birthdate: faker.date.between('1980-01-01', '2000-12-30'), ocean: random(), createdAt: new Date(), updatedAt: new Date(), role: 'free'},
+      {name: faker.name.firstName(), password: false, birthdate: faker.date.between('1980-01-01', '2000-12-30'), ocean: random(), createdAt: new Date(), updatedAt: new Date(), role: 'free'},
+      {name: faker.name.firstName(), password: false, birthdate: faker.date.between('1980-01-01', '2000-12-30'), ocean: random(), createdAt: new Date(), updatedAt: new Date(), role: 'free'},
     ], {});
   },
 

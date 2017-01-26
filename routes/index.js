@@ -10,6 +10,7 @@ var chart = require('../public/javascripts/chart.js');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
+  console.log(req.session);
   res.render('index', { title: 'The Checker' });
 });
 router.post('/register', function(req, res, next) {
@@ -39,10 +40,7 @@ router.get('/main2', function(req, res, next) {
   user.findAll({
     order: [['id', 'ASC']]
   }).then(function (user) {
-    user.forEach(function(val){
-      listed.push(val.dataValues);
-    })
-    res.render('main2', { listed: listed });
+    res.render('main2', { listed: user });
   })
 });
 
