@@ -3,24 +3,33 @@ var router = express.Router();
 var db = require('../models');
 var user = db.User;
 var faker = require('faker')
-// var Highcharts = require('../public/javascripts/highcharts.js')('../public/javascripts/highcharts-more.js')('../public/javascripts/exporting.js')
+// var Highcharts = require('highcharts');
+// require('highcharts/modules/exporting')(Highcharts);
 var ocean = require('../public/javascripts/ocean.js');
 var dummy = require('../public/javascripts/dummy.js');
-var chart = require('../public/javascripts/chart.js');
+var radardata = require('../public/javascripts/radardata.js');
+var bubbledata = require('../public/javascripts/bubbledata.js');
 
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'The Checker' });
+  res.render('index', { title: 'The Checker', info: "" });
 });
 
 router.post('/register', function(req, res, next) {
   let username = req.body.name
   let pass = req.body.password
   let birthdate = new Date(req.body.date)
-  // user.addUser(username, pass, birthdate)
   let quiz = dummy
-  res.render('register', {user: username, pass: pass, quiz:quiz});
+  user.findOrCreate({where: {name: username}, defaults: {role: 'free', password: pass, birthdate: birthdate}}).spread(function(user, created) {
+    console.log(user.get({
+      plain: true
+    }))
+    if(!created){
+      res.render('index', {title: 'The Checker', info: "username telah terdaftar"})
+    }
+    res.render('register', {user: user.dataValues.name, quiz:quiz});
+  })
 });
 
 router.post('/main', function(req, res, next) {
@@ -30,12 +39,31 @@ router.post('/main', function(req, res, next) {
     for (let j = 0; j < 2; j++){
     set.push(Math.floor(Math.random()*(10-3)+3))
     }
-    result.push(set.join(""))
+    result.push(Number(set.join("")))
   }
+  console.log(req.body.user);
   let name = req.body.user
-  // user.updateUserOCEAN(name, result.join(""))
-  res.render('main', {result: result});
+  user.updateUserOCEAN(name, result.join(""))
+  radardata.title.text = name
+  radardata.series[0].data = result
+  res.render('main', {data: radardata});
 });
+
+router.get('/compare', function(req, res, next){
+  user.findAll().then(function(data){
+    data.forEach(function(user){
+      let mydata = user.ocean.match(/\d{2}/g)
+      let xydata = {
+        x: +mydata[2],
+        y: +mydata[0],
+        z: 25,
+        name: user.name,
+      }
+      bubbledata.series[0].data.push(xydata)
+    })
+    res.render('compare', {data: bubbledata})
+  })
+})
 
 router.get('/main2', function(req, res, next) {
   let listed = []
@@ -49,7 +77,7 @@ router.get('/main2', function(req, res, next) {
 router.post('/update', function(req, res, next){
   let action = req.body['action'].split(" ")
   if (action[0] == 'delete'){
-    // user.deleteUser(action[1])
+    user.deleteUser(action[1])
     res.redirect('/main2')
   } if (action[0] == 'details'){
     res.send('grafik individual')
@@ -65,59 +93,10 @@ router.post('/updated', function(req, res, next){
   let name = req.body.name
   let pass = req.body.password
   let pref = req.body.preference
-  // user.updateMost(id, name, pass, pref)
+  user.updateMost(id, name, pass, pref)
   res.redirect('main2')
 })
 
-router.get('/chart', function(req, res, next){
-  let dataset = {
-    chart: {
-      polar: true,
-      type: 'line'
-    },
-    title: {
-      text: 'Your Name',
-      x: -80
-    },
-    pane: {
-      size: '100%',
-    },
-    xAxis: {
-      categories: ['Openness', 'Conscientiousness', 'Extraversion', 'Aggreableness',
-        'Neuroticism'],
-      tickmarkPlacement: 'on',
-      lineWidth: 0,
-      ceiling: 250,
-    },
-    yAxis: {
-      gridLineInterpolation: 'polygon',
-      lineWidth: 0,
-      min: 0,
-      tickAmount: 4,
-      ceiling: 100,
-    },
-    tooltip: {
-      shared: true,
-      pointFormat: '<span style="color:{series.color}">{series.name}: <b>{point.y:,.0f}</b><br/>'
-    },
-    legend: {
-      align: 'right',
-      verticalAlign: 'top',
-      y: 70,
-      layout: 'vertical'
-    },
-    series: [{
-      name: 'You',
-      data: [74, 49, 96, 55, 54],
-      pointPlacement: 'on'
-    }, {
-      name: 'People Around You',
-      data: [45, 58, 77, 82, 43],
-      pointPlacement: 'on'
-    }]
-  }
-  res.render('partials/test', {data: dataset})
-})
 router.get("*", function(req, res, next){
   res.render('index')
 })
