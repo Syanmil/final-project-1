@@ -35,6 +35,7 @@ let dataset = {
     layout: 'vertical'
   },
   series: [{
+    name: 'You',
     data: [74, 49, 96, 55, 54],
     pointPlacement: 'on'
   }]

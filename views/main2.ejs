@@ -4,12 +4,11 @@
     <th>Name</th>
     <th>Birthday</th>
     <th>Action</th>
-    <th>Preference</th>
   </tr>
 <%listed.forEach(function(val){%>
   <tr>
     <td><%= val.name %></td>
-    <td><%= new Date(val.birthdate).toLocaleString() %></td>
+    <td><%= val.birthdate.toDateString() %></td>
     <td>
       <form class="" action="/update" method="post">
         <button type="submit" name="action" class="btn btn-success"value="update <%= val.id %>">Update</button>
@@ -17,7 +16,6 @@
         <button type="submit" name="action" class="btn btn-info"value="details <%= val.id %>">Details</button>
       </form>
     </td>
-    <td><%= val.preference %></td>
   </tr>
 <%})%>
 </table>

@@ -3,8 +3,7 @@ var router = express.Router();
 var db = require('../models');
 var user = db.User;
 var faker = require('faker')
-// var Highcharts = require('highcharts');
-// require('highcharts/modules/exporting')(Highcharts);
+var getAge = require('get-age')
 var ocean = require('../public/javascripts/ocean.js');
 var dummy = require('../public/javascripts/dummy.js');
 var radardata = require('../public/javascripts/radardata.js');
@@ -21,6 +20,9 @@ router.post('/register', function(req, res, next) {
   let pass = req.body.password
   let birthdate = new Date(req.body.date)
   let quiz = dummy
+  if (req.body.quiz == 'ocean'){
+    quiz = ocean
+  }
   user.findOrCreate({where: {name: username}, defaults: {role: 'free', password: pass, birthdate: birthdate}}).spread(function(user, created) {
     console.log(user.get({
       plain: true
@@ -52,14 +54,17 @@ router.post('/main', function(req, res, next) {
 router.get('/compare', function(req, res, next){
   user.findAll().then(function(data){
     data.forEach(function(user){
-      let mydata = user.ocean.match(/\d{2}/g)
-      let xydata = {
-        x: +mydata[2],
-        y: +mydata[0],
-        z: 25,
-        name: user.name,
+      if (user.ocean == null){
+      } else {
+        let mydata = user.ocean.match(/\d{2}/g)
+        let xydata = {
+          x: +mydata[2],
+          y: +mydata[0],
+          z: 25,
+          name: user.name
+        }
+        bubbledata.series[0].data.push(xydata)
       }
-      bubbledata.series[0].data.push(xydata)
     })
     res.render('compare', {data: bubbledata})
   })
@@ -80,7 +85,15 @@ router.post('/update', function(req, res, next){
     user.deleteUser(action[1])
     res.redirect('/main2')
   } if (action[0] == 'details'){
-    res.send('grafik individual')
+    user.findById(action[1]).then(function(user){
+      let mydata = user.ocean.match(/\d{2}/g)
+      mydata = mydata.map(function(data){
+        return Number(data)
+      })
+      radardata.series[0].data = mydata
+      radardata.title.text = user.name
+      res.render('individual', {data: radardata})
+    })
   } else {
     user.findById(action[1]).then(function(val){
       res.render('updatepage', {data : val})
@@ -94,7 +107,7 @@ router.post('/updated', function(req, res, next){
   let pass = req.body.password
   let pref = req.body.preference
   user.updateMost(id, name, pass, pref)
-  res.redirect('main2')
+  res.redirect('/main2')
 })
 
 router.get("*", function(req, res, next){

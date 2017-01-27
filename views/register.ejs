@@ -3,13 +3,13 @@
 <h1>Anda Telah Terdaftar</h1>
 <br><br>
 <form class="" action="/main" method="post">
-  <input type="hidden" name= user value= "<%= user.name %>" ><br><br>
+  <input type="hidden" name= user value= "<%= user %>" ><br><br>
   <% for (var i = 0; i < quiz.length; i++){ %>
     <label for=""><%= i+1 %>. <%= quiz[i] %></label><br><br>
-    <input type="radio" value="1" name= <%= "answer"+i %>> Sangat Sesuai
-    <input type="radio" value="2" name= <%= "answer"+i %>> Tidak Sesuai
-    <input type="radio" value="3" name= <%= "answer"+i %>> Setuju
-    <input type="radio" value="4" name= <%= "answer"+i %>> Sangat Sesuai
+    <input type="radio" value="1" name= <%= "answer"+i %> required> Sangat Sesuai
+    <input type="radio" value="2" name= <%= "answer"+i %> required> Tidak Sesuai
+    <input type="radio" value="3" name= <%= "answer"+i %> required> Setuju
+    <input type="radio" value="4" name= <%= "answer"+i %> required> Sangat Sesuai
     <hr><br><br>
   <% } %>
   <input type="submit" class="btn btn-default" name="Submit" value="Submit">
